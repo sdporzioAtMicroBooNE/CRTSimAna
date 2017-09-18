@@ -22,5 +22,9 @@ P.S.:
 You can run `mrb uc` if you are having problems with your CMake files not updating.
 
 If you have more than one core, you can use the option `-j xx` with `xx` equal to the number of cores.
+git
+You can also use `ninja` if you have previously set it up, to make building much more efficient. E.g.:
 
-You can also use `ninja` if you have previously set it up, to make building much more efficient. E.g.: `mrb i --generator ninja -j 16`
+```
+mrb i --generator ninja -j 16
+```
