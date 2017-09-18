@@ -1,0 +1,54 @@
+#include "services_microboone.fcl"
+
+process_name: scanrsp
+
+services:
+{
+  TFileService: {fileName: "RecoSelectionParametersTree.root"}
+  TimeTracker:            {}
+  MemoryTracker:          {}
+  RandomNumberGenerator:  {}
+  @table::microboone_services
+}
+
+source:
+{
+  module_type: RootInput
+  maxEvents:  -1
+}
+
+physics:
+{
+	analyzers:
+  {
+    ScanRecoSelectionParameters0:
+    {
+		 	module_type:          "ScanRecoSelectionParameters"
+      InstanceName:         "ScanRecoSelectionParameters0"
+      Iteration:            "0"
+      MinTpcBound:          [10., -105.53, 10.1]
+      MaxTpcBound:          [246.35, 107.47, 1026.9]
+			PfpLabel:	       			"pandoraNu"
+      HitLabel:             "gaushit" 
+      DataType:             "signal"
+      DecayChannel:         "2"
+      SterileMass:          "0.350" # GeV/c^2
+			DistanceCut:					"10" # cm
+      CaloCut:              "10" # cm
+      ChannelNorm:          "3.3" # number of channels in cm
+      TickNorm:             "17.9" # number of ticks in cm
+			PrimaryOnly:					"true"
+			EndVerticesAlso:			"true"
+      AnalysisType:         "tt"
+      VerboseMode:          "true"
+      SaveDrawTree:         "true" # Optional. Takes more space.
+    }
+  }
+  analysis: [ScanRecoSelectionParameters0]
+  end_paths: [analysis]
+}
+
+services.DetectorClocksService.InheritClockConfig: false
+services.DetectorClocksService.TriggerOffsetTPC: -400
+services.DetectorPropertiesService.NumberTimeSamples: 6400
+services.DetectorPropertiesService.ReadOutWindowSize: 6400
