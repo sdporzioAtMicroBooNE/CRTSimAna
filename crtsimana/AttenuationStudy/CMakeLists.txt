@@ -2,6 +2,8 @@
 
 art_make(BASENAME_ONLY
 	LIB_LIBRARIES 
+		CRTData
+		CRTProducts
 		lardataobj_RecoBase
 		lardataobj_AnalysisBase
 		larcore_Geometry
@@ -15,7 +17,9 @@ art_make(BASENAME_ONLY
 		${CLHEP}
 		${ROOT_BASIC_LIB_LIST}
 		${G4_LIB_LIST}
-	MODULE_LIBRARIES  
+	MODULE_LIBRARIES
+		CRTData
+		CRTProducts
 		larreco_RecoAlg
 		larreco_RecoAlg_Cluster3DAlgs
 		larsim_Simulation

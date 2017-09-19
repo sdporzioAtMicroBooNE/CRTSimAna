@@ -45,6 +45,9 @@
 #include "larcoreobj/SimpleTypesAndConstants/geo_types.h"
 #include "lardata/DetectorInfoServices/DetectorPropertiesService.h"
 
+// CRT includes
+#include "uboone/CRT/CRTProducts/CRTSimData.hh"
+
 // Analyzer class
 class AttenuationStudy : public art::EDAnalyzer
 {
@@ -56,7 +59,7 @@ public:
   void endJob();
 private:
   // Declare fhiclcpp variables
-  std::string fInstanceName;
+  bool fVerbose;
 
   // Declare services
   geo::GeometryCore const* fGeometry; // Pointer to the Geometry service
@@ -65,8 +68,6 @@ private:
   // Declare trees
   TTree *tTree;
   TTree *metaTree;
-
-
 
   // Declare analysis variables
   Int_t run, subrun, event;
@@ -77,7 +78,7 @@ private:
 
 AttenuationStudy::AttenuationStudy(fhicl::ParameterSet const & pset) :
     EDAnalyzer(pset),
-    fInstanceName(pset.get<std::string>("InstanceName"))
+    fVerbose(pset.get<bool>("Verbose"))
 {} // END constructor AttenuationStudy
 
 AttenuationStudy::~AttenuationStudy()
@@ -89,7 +90,7 @@ void AttenuationStudy::beginJob()
   art::ServiceHandle< art::TFileService > tfs;
 
   metaTree = tfs->make<TTree>("Metadata","");
-  metaTree->Branch("instanceName",&fInstanceName);
+  metaTree->Branch("verbose",&fVerbose);
   metaTree->Fill();
 
   tTree = tfs->make<TTree>("Data","");
@@ -112,13 +113,30 @@ void AttenuationStudy::ClearData()
   event = -1;
 } // END function ClearData
 
-
-
 void AttenuationStudy::analyze(art::Event const & evt)
 {
-  std::cout << "ciao" << std::endl;
-} // END function analyze
+  // Get run information
+  run = evt.id().run();
+  subrun = evt.id().subRun();
+  event = evt.id().event();
+  if (fVerbose) {printf("||INFORMATION FOR EVENT %i [RUN %i, SUBRUN %i]||\n", event, run, subrun);}
 
+  // Get CRT handle
+  art::InputTag crtTag {"crtdetsim"};
+  auto crtHandle = evt.getValidHandle<std::vector<crt::CRTSimData>>(crtTag);
+
+  // // Print out data
+  for (auto crt : *crtHandle)
+  {
+    // if (crt.ADC()!=0) {printf("|_Channel: %i | ADC: %i [%i,%i]\n", crt.Channel(), crt.ADC(), crt.T0(), crt.T1());}
+    printf("|_Channel: %i | ADC: %i [%i,%i]\n", crt.Channel(), crt.ADC(), crt.T0(), crt.T1());
+  }
+
+  // Fill tree and finish event loop
+  tTree->Fill();
+  if (fVerbose) {printf("---------------------------------------------\n\n");}
+  return;
+} // END function analyze
 
 // Name that will be used by the .fcl to invoke the module
 DEFINE_ART_MODULE(AttenuationStudy)
