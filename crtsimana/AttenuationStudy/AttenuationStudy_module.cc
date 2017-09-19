@@ -40,7 +40,6 @@
 #include "canvas/Persistency/Common/FindMany.h"
 
 // larsoft object includes
-#include "larcorealg/Geometry/geo.h"
 #include "larcore/Geometry/Geometry.h"
 #include "larcore/CoreUtils/ServiceUtil.h" // lar::providerFrom<>()
 #include "larcoreobj/SimpleTypesAndConstants/geo_types.h"
@@ -78,7 +77,7 @@ private:
 
 AttenuationStudy::AttenuationStudy(fhicl::ParameterSet const & pset) :
     EDAnalyzer(pset),
-    fInstanceName(pset.get<std::string>("InstanceName")),
+    fInstanceName(pset.get<std::string>("InstanceName"))
 {} // END constructor AttenuationStudy
 
 AttenuationStudy::~AttenuationStudy()
@@ -117,7 +116,7 @@ void AttenuationStudy::ClearData()
 
 void AttenuationStudy::analyze(art::Event const & evt)
 {
-
+  std::cout << "ciao" << std::endl;
 } // END function analyze
 
 
