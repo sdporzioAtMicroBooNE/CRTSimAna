@@ -4,32 +4,22 @@ art_make(BASENAME_ONLY
 	LIB_LIBRARIES 
 		CRTData
 		CRTProducts
-		lardataobj_RecoBase
-		lardataobj_AnalysisBase
 		larcore_Geometry
-    larcore_Geometry_Geometry_service
+		larcore_Geometry_Geometry_service
 		lardata_Utilities
+		nusimdata_SimulationBase
 		${SIMULATIONBASE}
 		${MF_MESSAGELOGGER}
 		${MF_UTILITIES}
 		${FHICLCPP}
 		${CETLIB}
-		${CLHEP}
 		${ROOT_BASIC_LIB_LIST}
 		${G4_LIB_LIST}
 	MODULE_LIBRARIES
 		CRTData
 		CRTProducts
-		larreco_RecoAlg
-		larreco_RecoAlg_Cluster3DAlgs
-		larsim_Simulation
-		lardataobj_RawData
-		lardata_RecoObjects
-		lardataobj_RecoBase
-		lardataobj_MCBase
-		lardataobj_AnalysisBase
 		larcore_Geometry
-    larcore_Geometry_Geometry_service
+		larcore_Geometry_Geometry_service
 		lardata_Utilities
 		nusimdata_SimulationBase
 		${ART_FRAMEWORK_CORE}
@@ -46,7 +36,6 @@ art_make(BASENAME_ONLY
 		${MF_UTILITIES}
 		${FHICLCPP}
 		${CETLIB}
-		${CLHEP}
 		${ROOT_BASIC_LIB_LIST}
 		${G4_LIB_LIST}
 	)
