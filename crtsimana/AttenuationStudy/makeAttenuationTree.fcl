@@ -24,7 +24,9 @@ physics:
     AttenuationStudy0:
     {
 		 	module_type:      "AttenuationStudy"
+      CrtLabel:         "crtdetsim"
       Verbose:          "true"
+      ADC_Threshold:    70
     }
   }
   analysis: [AttenuationStudy0]
